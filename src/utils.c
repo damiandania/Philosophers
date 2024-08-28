@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dania <dania@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ddania-c <ddania-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 23:08:14 by dania             #+#    #+#             */
-/*   Updated: 2023/09/03 23:12:02 by dania            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:31:37 by ddania-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philo.h"
 
-static	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -22,8 +22,39 @@ static	ft_strlen(const char *s)
 	return (i);
 }
 
-int	exit_error(char *msg)
+time_t	get_time(void)
 {
-	write(1, msg, ft_strlen(msg));
-	return (EXIT_FAILURE);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	delay_time(time_t start_time)
+{
+	while (get_time() < start_time)
+		continue ;
+}
+
+void	*free_data(t_data *data)
+{
+	unsigned int	i;
+
+	if (!data)
+		return (NULL);
+	if (data->fork_locker != NULL)
+		free(data->fork_locker);
+	if (data->philo != NULL)
+	{
+		i = 0;
+		while (i < data->num_philo)
+		{
+			if (data->philo[i] != NULL)
+				free(data->philo[i]);
+			i++;
+		}
+		free(data->philo);
+	}
+	free(data);
+	return (NULL);
 }
