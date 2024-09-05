@@ -40,9 +40,12 @@ Once the project is built, you can run the philosophers simulation. For example:
 
 ```bash
 $ ./philo number_of_philosophers [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
+```
 
 **Example:**
+
 ```bash
 $ ./philo 5 800 200 200
+```
 
 This command will start a simulation with 5 philosophers, where each philosopher has 800ms to live without eating, takes 200ms to eat, and 200ms to sleep.
